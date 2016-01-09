@@ -37,15 +37,16 @@ hist(dailytotals$totals, 100, col='green', xlab='daily-totals steps (ingoring NA
 
 **3. Mean and median number of steps taken each day**
 
-To report the daily means and medians of `steps` taken:
+To report the daily mean and median of `steps` taken, with intervals with missing `steps` omitted:
 ```{r, echo=T, meassage=F, warning=F}
-summary(round(dailytotals$totals))
+summary(dailytotals$totals)
 ```
 
 **4. Time series plot of the average number of steps taken**
 
 To see any pattern in the daily averages of `steps`:
 ```{r, echo=T, meassage=F, warning=F}
+dailyaves=ddply(df, c('date'), summarise, mean=mean(steps))
 plot(dailyaves$date, dailyaves$mean, xlab='date', ylab='daily averages of steps for 5-minute intervals (omitting NAs)')
 lines(dailyaves$date, dailyaves$mean)
 ```
@@ -79,6 +80,11 @@ To histogram the daily totals of the `steps` with measurement intervals after mi
 ```{r, echo=T, meassage=F, warning=F}
 dailytotalsim=ddply(dfim, c('date'), summarise, totals=sum(steps))
 hist(dailytotalsim$totals, 100, col='blue', xlab='daily-total steps (NAs replaced by interval-means)', ylab='count of days with the given daily-total')
+```
+
+To see if the daily mean and median of `steps` taken have changed (from point 3 above) after imputing missing `steps`:
+```{r, echo=T, meassage=F, warning=F}
+summary(dailytotalsim$totals)
 ```
 
 **8. Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends**

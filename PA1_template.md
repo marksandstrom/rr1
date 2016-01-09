@@ -61,10 +61,10 @@ hist(dailytotals$totals, 100, col='green', xlab='daily-totals steps (ingoring NA
 
 **3. Mean and median number of steps taken each day**
 
-To report the daily means and medians of `steps` taken:
+To report the daily mean and median of `steps` taken, with intervals with missing `steps` omitted:
 
 ```r
-summary(round(dailytotals$totals))
+summary(dailytotals$totals)
 ```
 
 ```
@@ -77,6 +77,7 @@ summary(round(dailytotals$totals))
 To see any pattern in the daily averages of `steps`:
 
 ```r
+dailyaves=ddply(df, c('date'), summarise, mean=mean(steps))
 plot(dailyaves$date, dailyaves$mean, xlab='date', ylab='daily averages of steps for 5-minute intervals (omitting NAs)')
 lines(dailyaves$date, dailyaves$mean)
 ```
@@ -131,6 +132,17 @@ hist(dailytotalsim$totals, 100, col='blue', xlab='daily-total steps (NAs replace
 
 ![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
 
+To see if the daily mean and median of `steps` taken have changed (from point 3 above) after imputing missing `steps`:
+
+```r
+summary(dailytotalsim$totals)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      41    9819   10770   10770   12810   21190
+```
+
 **8. Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends**
 
 To see if there is a difference in per-interval-averages of steps taken between weekdays (Mon-Fri) and weekends (Sat-Sun):
@@ -146,5 +158,5 @@ intervalaves=ddply(dfwe, c('interval'), summarise, mean=mean(steps))
 plot(intervalaves$interval, intervalaves$mean, 'l', col='green', xlab='interval', ylab='Sat-Sun mean steps',lwd=3)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
 
