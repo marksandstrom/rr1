@@ -1,10 +1,11 @@
 ---
 title: "Project Assignment 1"
 author: "Mark Sandstrom"
-date: "Friday, January 08, 2016"
+date: '2016-01-09'
 output:
   html_document:
     keep_md: yes
+keep_md: yes
 ---
 Reproducing results on analyzing steps taken by a volunteer at different times of day
 ---
@@ -31,22 +32,15 @@ The measurement `steps` is simply an integer count of (e.g. walking) steps taken
 To histogram the daily totals of the `steps` with measurement intervals with missing values (NAs) for `steps` ignored:
 ```{r, echo=T, meassage=F, warning=F}
 dailytotals=ddply(df, c('date'), summarise, totals=sum(steps))
-hist(dailytotals$totals, col='green', xlab='daily-totals steps (ingoring NAs)', ylab='count of days with the given daily-total')
+hist(dailytotals$totals, 100, col='green', xlab='daily-totals steps (ingoring NAs)', ylab='count of days with the given daily-total')
 ```
 
 **3. Mean and median number of steps taken each day**
 
 To report the daily means and medians of `steps` taken:
 ```{r, echo=T, meassage=F, warning=F}
-dailyaves=ddply(df, c('date'), summarise, mean=mean(steps), median=median(steps))
-summary(round(dailyaves$mean))
-summary(dailyaves$median)
+summary(round(dailytotals$totals))
 ```
-Thus:
-
-- the **mean** of daily-averages of `steps` is: **37.34**;
-
-- the **median** of daily-averages of `steps` is: **37.00**.
 
 **4. Time series plot of the average number of steps taken**
 
@@ -84,7 +78,7 @@ any(is.na(dfim))
 To histogram the daily totals of the `steps` with measurement intervals after missing values (NAs) for `steps` imputed per above:
 ```{r, echo=T, meassage=F, warning=F}
 dailytotalsim=ddply(dfim, c('date'), summarise, totals=sum(steps))
-hist(dailytotalsim$totals, col='blue', xlab='daily-total steps (NAs replaced by interval-means)', ylab='count of days with the given daily-total')
+hist(dailytotalsim$totals, 100, col='blue', xlab='daily-total steps (NAs replaced by interval-means)', ylab='count of days with the given daily-total')
 ```
 
 **8. Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends**

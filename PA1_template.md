@@ -1,6 +1,6 @@
 # Project Assignment 1
 Mark Sandstrom  
-Friday, January 08, 2016  
+2016-01-09  
 Reproducing results on analyzing steps taken by a volunteer at different times of day
 ---
 **1. Code for reading in the dataset and/or processing the data**
@@ -54,7 +54,7 @@ To histogram the daily totals of the `steps` with measurement intervals with mis
 
 ```r
 dailytotals=ddply(df, c('date'), summarise, totals=sum(steps))
-hist(dailytotals$totals, col='green', xlab='daily-totals steps (ingoring NAs)', ylab='count of days with the given daily-total')
+hist(dailytotals$totals, 100, col='green', xlab='daily-totals steps (ingoring NAs)', ylab='count of days with the given daily-total')
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
@@ -64,28 +64,13 @@ hist(dailytotals$totals, col='green', xlab='daily-totals steps (ingoring NAs)', 
 To report the daily means and medians of `steps` taken:
 
 ```r
-dailyaves=ddply(df, c('date'), summarise, mean=mean(steps), median=median(steps))
-summary(round(dailyaves$mean))
+summary(round(dailytotals$totals))
 ```
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##    0.00   31.00   37.00   37.34   46.00   74.00
+##      41    8841   10760   10770   13290   21190
 ```
-
-```r
-summary(dailyaves$median)
-```
-
-```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##       0       0       0       0       0       0
-```
-Thus:
-
-- the **mean** of daily-averages of `steps` is: **37.34**;
-
-- the **median** of daily-averages of `steps` is: **37.00**.
 
 **4. Time series plot of the average number of steps taken**
 
@@ -141,7 +126,7 @@ To histogram the daily totals of the `steps` with measurement intervals after mi
 
 ```r
 dailytotalsim=ddply(dfim, c('date'), summarise, totals=sum(steps))
-hist(dailytotalsim$totals, col='blue', xlab='daily-total steps (NAs replaced by interval-means)', ylab='count of days with the given daily-total')
+hist(dailytotalsim$totals, 100, col='blue', xlab='daily-total steps (NAs replaced by interval-means)', ylab='count of days with the given daily-total')
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
